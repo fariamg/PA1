@@ -55,12 +55,22 @@ char *num2name(int num) {
   return 0;
 }
 
+// estrutura para armazenar as opções de linha de comando
+// size: tamanho do vetor
+// seed: semente para inicialização do vetor (seemente para PRNG)
+// alg: número do algoritmo a ser utilizado
+// preenchida pela parse_args
 typedef struct opt {
   int size;
   int seed;
   int alg;
 } opt_t;
 
+// estrutura para armazenar o desempenho do algoritmo
+// número de comparações, movimentações e chamadas de função
+// cmp: número de comparações
+// move: número de movimentações de dados
+// calls: número de chamadas de função
 typedef struct sortperf {
   int cmp;
   int move;
