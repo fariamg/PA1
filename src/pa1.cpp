@@ -14,7 +14,8 @@
 #define ALGSHELLSORT 7
 #define ALGRECSEL 8
 
-// define a struct de algoritmos possíveis, recebendo um int identificdaor e um ponteiro char para o nome
+// define a struct de algoritmos possíveis, recebendo um int identificdaor e um
+// ponteiro char para o nome
 typedef struct alg {
   int num;
   char *name;
@@ -26,14 +27,13 @@ typedef struct alg {
 alg_t algvet[] = {
     {ALGINSERTION, "i"}, {ALGSELECTION, "s"}, {ALGQSORT, "q"},
     {ALGQSORT3, "q3"},   {ALGQSORTINS, "qi"}, {ALGQSORT3INS, "q3i"},
-    {ALGSHELLSORT, "h"}, {ALGRECSEL, "rs"},   {0, 0}
-};
+    {ALGSHELLSORT, "h"}, {ALGRECSEL, "rs"},   {0, 0}};
 
-// função aque recebe um ponteiro char e retorna o número do algoritmo correspondente
-// se o nome não for encontrado, retorna 0
-// a função percorre o array de algoritmos, comparando o nome do algoritmo com o nome recebido
+// função aque recebe um ponteiro char e retorna o número do algoritmo
+// correspondente se o nome não for encontrado, retorna 0 a função percorre o
+// array de algoritmos, comparando o nome do algoritmo com o nome recebido
 int name2num(char *name) {
-  int i = 0; 
+  int i = 0;
   while (algvet[i].num) {
     if (!strcmp(algvet[i].name, name))
       return algvet[i].num;
@@ -44,7 +44,8 @@ int name2num(char *name) {
 
 // função que recebe um número e retorna o nome do algoritmo correspondente
 // se o número não for encontrado, retorna 0
-// a função percorre o array de algoritmos, comparando o número do algoritmo com o número recebido
+// a função percorre o array de algoritmos, comparando o número do algoritmo com
+// o número recebido
 char *num2name(int num) {
   int i = 0;
   while (algvet[i].num) {
@@ -128,7 +129,7 @@ void initVector(int *vet, int size) {
 }
 
 void printVector(int *vet, int size) {
-  // Descricao: inicializa vet com valores aleatorios
+  // Descricao: printa o vetor
   // Entrada: vet
   // Saida: vet
   int i;
@@ -138,6 +139,9 @@ void printVector(int *vet, int size) {
   printf("\n");
 }
 
+// função que recebe dois ponteiros para inteiros e troca os valores entre eles
+// incrementa o número de movimentações de dados em 3
+// a função é utilizada para trocar os valores de dois elementos do vetor
 void swap(int *xp, int *yp, sortperf_t *s) {
   int temp = *xp;
   *xp = *yp;
@@ -146,7 +150,9 @@ void swap(int *xp, int *yp, sortperf_t *s) {
 }
 
 // shellsort
-void shellSort(int *A, int n, sortperf_t *s) {}
+void shellSort(int *A, int n, sortperf_t *s) {
+  
+}// TODO
 
 // recursive selection sort
 void recursiveSelectionSort(int arr[], int l, int r, sortperf_t *s) {
@@ -193,7 +199,7 @@ int median(int a, int b, int c) {
 }
 
 // quicksort partition using median of 3
-void partition3(int *A, int l, int r, int *i, int *j, sortperf_t *s) {} //TODO
+void partition3(int *A, int l, int r, int *i, int *j, sortperf_t *s) {} // TODO
 
 // standard quicksort partition
 void partition(int *A, int l, int r, int *i, int *j, sortperf_t *s) {} // TODO
@@ -241,22 +247,22 @@ void parse_args(int argc, char **argv, opt_t *opt)
   // variavel auxiliar
   int c;
 
-  // inicializacao variaveis globais para opcoes
-  opt->seed = 1;
-  opt->size = 10;
-  opt->alg = 1;
+  // inicializacao variaveis globais para opcoes com valores padrão
+  opt->seed = 1;  // seed para PRNG
+  opt->size = 10; // tamanho de vetor
+  opt->alg = 1;   // algoritmo a ser utilizado
 
   // getopt - letra indica a opcao, : junto a letra indica parametro
   // no caso de escolher mais de uma operacao, vale a ultima
   while ((c = getopt(argc, argv, "z:s:a:h")) != EOF) {
     switch (c) {
-    case 'z':
+    case 'z': // define o tamanho do vetor pela entrada no input
       opt->size = atoi(optarg);
       break;
-    case 's':
+    case 's': // define a seed do PRNG pela entrada no input
       opt->seed = atoi(optarg);
       break;
-    case 'a':
+    case 'a': // define o algoritmo a ser usado entrada no input
       opt->alg = name2num(optarg);
       break;
     case 'h':
@@ -265,12 +271,18 @@ void parse_args(int argc, char **argv, opt_t *opt)
       exit(1);
     }
   }
-  if (!opt->alg) {
+  if (!opt->alg) { // se não for valido o algoritmo, o programa é encerrado
     uso();
     exit(1);
   }
 }
 
+// essa função calcula a diferença de tempo entre dois instantes
+// é util para calcular o tempo de execução de certa função
+// t1 = tempo inicial
+// t2 = tempo final
+// res = diferença de tempo
+// diferença calculada em nanosegundos
 void clkDiff(struct timespec t1, struct timespec t2, struct timespec *res)
 // Descricao: calcula a diferenca entre t2 e t1, que e armazenada em res
 // Entrada: t1, t2
@@ -287,6 +299,8 @@ void clkDiff(struct timespec t1, struct timespec t2, struct timespec *res)
   }
 }
 
+// argc = int que representa o numero de parametros passados
+// argv = array com os parametros passados
 int main(int argc, char **argv) {
   sortperf_t s;
   int *vet;
@@ -300,16 +314,21 @@ int main(int argc, char **argv) {
   parse_args(argc, argv, &opt);
 
   // malloc with opt.size+1 for heapsort
+  // aloca um local de memoria a mais para poder utilizar o algoritmo heapsort
+  // vetor de ponteiros para inteiro
   vet = (int *)malloc((opt.size + 1) * sizeof(int));
 
   // initialize
-  resetcounter(&s);
-  srand48(opt.seed);
-  initVector(vet, opt.size);
-  vet[opt.size] = vet[0]; // for heapsort
+  resetcounter(&s);  // zera todos os contadores do sortperf (guarda os dados de
+                     // desempenho do algoritmo)
+  srand48(opt.seed); // inicializa o PRNG com a seed passada na linha de comando
+  initVector(vet, opt.size); // inicializa o vetor com valores randomicos
+  vet[opt.size] = vet[0];    // for heapsort
   // if (opt.size < 100) printVector(vet, opt.size);
 
-  retp = clock_gettime(CLOCK_MONOTONIC, &inittp);
+  retp = clock_gettime(
+      CLOCK_MONOTONIC,
+      &inittp); // recebe tempo atual (tempo inicial) e atribui a inittp
 
   // execute algorithm
   switch (opt.alg) {
@@ -338,7 +357,9 @@ int main(int argc, char **argv) {
     recursiveSelectionSort(vet, 0, opt.size - 1, &s);
     break;
   }
-  retp = clock_gettime(CLOCK_MONOTONIC, &endtp);
+  retp = clock_gettime(
+      CLOCK_MONOTONIC,
+      &endtp); // recebe tempo atual (tempo final) e atribui a inittp
   clkDiff(inittp, endtp, &restp);
 
   // if (opt.size<100) printVector(vet, opt.size);
