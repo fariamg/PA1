@@ -178,7 +178,28 @@ void recursiveSelectionSort(int arr[], int l, int r, sortperf_t *s) {
 }
 
 // selection sort
-void selectionSort(int arr[], int l, int r, sortperf_t *s) { return; } // TODO
+// o selection sort procura o menor elemento do vetor e vai arrastando pra esquerda
+// l (left) = limite inferior do vetor, inicializa em 0
+// r (right) = limite superior do vetor, inicializa em size - 1 (ultimo elemento)
+void selectionSort(int arr[], int l, int r, sortperf_t *s) {
+  inccalls(s, 1); // incrementa o número de chamadas de função
+
+  for (int i = l; i <= r; i++) {
+    int min = i; // inicializa o índice do menor elemento
+    inccmp(s, 1);
+
+    // procura o menor valor no subarray não ordenado
+    for (int j = i + 1; j <= r; j++) {
+      inccmp(s, 1);
+      if (arr[j] < arr[min]) 
+        min = j; // atualiza o índice do menor elemento
+    }
+
+    // troca o menor elemento encontrado com o primeiro elemento do subarray
+    if (min != i)
+      swap(&arr[min], &arr[i], s);
+  }
+}
 
 // insertion sort
 void insertionSort(int v[], int l, int r, sortperf_t *s) { return; } // TODO
