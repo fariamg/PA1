@@ -177,10 +177,27 @@ void recursiveSelectionSort(int arr[], int l, int r, sortperf_t *s) {
   }
 }
 
-// selection sort
-// o selection sort procura o menor elemento do vetor e vai arrastando pra esquerda
-// l (left) = limite inferior do vetor, inicializa em 0
+// SELECTION SORT
+// Um algoritmo simples de ordenação que divide o array em duas partes: uma parte
+// ordenada (à esquerda) e uma parte não ordenada (à direita). A cada iteração,
+// ele seleciona o menor elemento da parte não ordenada e o move para o final da
+// parte ordenada. 
+//
+// COMPLEXIDADE: 
+// O(n²) no pior caso, O(n²) no melhor caso e O(n²) no caso médio
+//
+// EXEMPLO: 
+// [5, 2, 4, 1, 3]
+// Passo 1: [5, 2, 4, 1, 3] → min=1 → Troca 5↔1 → [1, 2, 4, 5, 3]
+// Passo 2: [1 | 2, 4, 5, 3] → min=2 → Nenhuma troca
+// Passo 3: [1, 2 | 4, 5, 3] → min=3 → Troca 4↔3 → [1, 2, 3, 5, 4]
+// Passo 4: [1, 2, 3 | 5, 4] → min=4 → Troca 5↔4 → [1, 2, 3, 4, 5]
+//
+// PARÂMETROS:
+// arr = vetor a ser ordenado
+// l (left) = limite inferior do vetor, inicializa em 0 
 // r (right) = limite superior do vetor, inicializa em size - 1 (ultimo elemento)
+// s = ponteiro para a estrutura de desempenho do algoritmo
 void selectionSort(int arr[], int l, int r, sortperf_t *s) {
   inccalls(s, 1); // incrementa o número de chamadas de função
 
