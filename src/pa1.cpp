@@ -149,10 +149,24 @@ void swap(int *xp, int *yp, sortperf_t *s) {
   incmove(s, 3);
 }
 
-// shellsort
+// SHELLSORT
+// Utilizando sequencia n/2^i
+// O algoritmo Shellsort é uma versão otimizada do Insertion Sort. Ele
+// divide o vetor em subvetores, ordenando-os usando o Insertion Sort. A
+// diferença é que o Shellsort permite que os elementos estejam distantes uns
+// dos outros, o que ajuda a mover os elementos mais distantes para suas
+// posições corretas mais rapidamente. Isso reduz o número de trocas
+// necessárias, tornando o algoritmo mais eficiente.
+// COMPLEXIDADE:
+// O(n²) no pior caso, O(n log n) no melhor caso e O(n²) no caso médio
+// EXEMPLO:
+// [5, 2, 4, 1, 3]
+// Passo 1: [5, 2, 4, 1, 3] → [2, 5, 4, 1, 3] → [2, 1, 4, 5, 3]
+// Passo 2: [2, 1, 4, 5, 3] → [1, 2, 4, 5, 3] → [1, 2, 3, 4, 5]
+// Passo 3: [1, 2, 4, 5, 3] → [1, 2, 3, 4, 5] → [1, 2, 3, 4, 5]
 void shellSort(int *A, int n, sortperf_t *s) {
-  
-}// TODO
+
+}
 
 // recursive selection sort
 void recursiveSelectionSort(int arr[], int l, int r, sortperf_t *s) {
