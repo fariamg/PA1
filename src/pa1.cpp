@@ -218,7 +218,27 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
   }
 }
 
-// insertion sort
+// INSERTION SORT
+// Um algoritmo simples de ordenação que constrói uma sequência ordenada
+// (à esquerda) e uma sequência não ordenada (à direita). A cada iteração, ele
+// pega o primeiro elemento da parte não ordenada e o insere na posição correta
+// da parte ordenada.
+//
+// COMPLEXIDADE:
+// O(n²) no pior caso, O(n) no melhor caso e O(n²) no caso médio
+//
+// EXEMPLO:
+// [5, 2, 4, 1, 3]
+// Passo 1: [5 | 2, 4, 1, 3] → Insere 2 → [2, 5 | 4, 1, 3]
+// Passo 2: [2, 5 | 4, 1, 3] → Insere 4 → [2, 4, 5 | 1, 3]
+// Passo 3: [2, 4, 5 | 1, 3] → Insere 1 → [1, 2, 4, 5 | 3]
+// Passo 4: [1, 2, 4, 5 | 3] → Insere 3 → [1, 2, 3, 4, 5]
+//
+// PARÂMETROS:
+// v = vetor a ser ordenado
+// l (left) = limite inferior do vetor, inicializa em 0
+// r (right) = limite superior do vetor, inicializa em size - 1 (ultimo elemento)
+// s = ponteiro para a estrutura de desempenho do algoritmo
 void insertionSort(int v[], int l, int r, sortperf_t *s) { return; } // TODO
 
 // median of 3 integers
