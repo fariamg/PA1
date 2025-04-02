@@ -239,7 +239,27 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
 // l (left) = limite inferior do vetor, inicializa em 0
 // r (right) = limite superior do vetor, inicializa em size - 1 (ultimo elemento)
 // s = ponteiro para a estrutura de desempenho do algoritmo
-void insertionSort(int v[], int l, int r, sortperf_t *s) { return; } // TODO
+void insertionSort(int v[], int l, int r, sortperf_t *s) {
+  inccalls(s, 1); // incrementa o número de chamadas de função
+
+  for (int i = l + 1; i <= r; i++) {
+    int aux = v[i]; // armazena o valor atual
+    int j = i - 1; // inicializa o índice do elemento anterior
+
+    // desloca os elementos maiores que 'aux' para frente
+    // j >= l faz com que o loop não ultrapasse o limite inferior do vetor
+    while (j >= l && v[j] > aux) {
+      inccmp(s, 1); // so conta comparações de elementos (discarta as comparações de controle)
+      v[j + 1] = v[j]; // desloca o elemento para frente
+      incmove(s, 1); // incrementa o número de movimentações
+      j--; // decrementa o índice
+    }
+
+    // insere o elemento na posição correta
+    v[j + 1] = aux;
+    incmove(s, 1); // incrementa o número de movimentações
+  }
+}
 
 // median of 3 integers
 int median(int a, int b, int c) {
