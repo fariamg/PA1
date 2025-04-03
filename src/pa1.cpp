@@ -24,10 +24,9 @@ typedef struct alg {
 // array de algoritmos possíveis
 // cada elemento é um struct alg, com o número do algoritmo e o nome
 // o último elemento é um struct com num=0 e name=0, que indica o fim do array
-alg_t algvet[] = {
-    {ALGINSERTION, "i"}, {ALGSELECTION, "s"}, {ALGQSORT, "q"},
-    {ALGQSORT3, "q3"},   {ALGQSORTINS, "qi"}, {ALGQSORT3INS, "q3i"},
-    {ALGSHELLSORT, "h"}, {ALGRECSEL, "rs"},   {0, 0}};
+alg_t algvet[] = {{ALGINSERTION, "i"}, {ALGSELECTION, "s"}, {ALGQSORT, "q"},
+                  {ALGQSORT3, "q3"},   {ALGQSORTINS, "qi"}, {ALGQSORT3INS, "q3i"},
+                  {ALGSHELLSORT, "h"}, {ALGRECSEL, "rs"},   {0, 0}};
 
 // função aque recebe um ponteiro char e retorna o número do algoritmo
 // correspondente se o nome não for encontrado, retorna 0 a função percorre o
@@ -157,15 +156,21 @@ void swap(int *xp, int *yp, sortperf_t *s) {
 // dos outros, o que ajuda a mover os elementos mais distantes para suas
 // posições corretas mais rapidamente. Isso reduz o número de trocas
 // necessárias, tornando o algoritmo mais eficiente.
+//
 // COMPLEXIDADE:
-// O(n²) no pior caso, O(n log n) no melhor caso e O(n²) no caso médio
+// O(n²) no pior caso, O(n log n) no melhor caso, não possui demonstração exata de caso medio
+//
 // EXEMPLO:
 // [5, 2, 4, 1, 3]
 // Passo 1: [5, 2, 4, 1, 3] → [2, 5, 4, 1, 3] → [2, 1, 4, 5, 3]
 // Passo 2: [2, 1, 4, 5, 3] → [1, 2, 4, 5, 3] → [1, 2, 3, 4, 5]
 // Passo 3: [1, 2, 4, 5, 3] → [1, 2, 3, 4, 5] → [1, 2, 3, 4, 5]
 void shellSort(int *A, int n, sortperf_t *s) {
+  inccalls(s, 1); // incrementa o número de chamadas de função
 
+  // define um range de comparação, inicialmente n/2 reduzindo a metade por iteração
+  for (int range = n / 2; range >= 1; range /= 2) {
+  }
 }
 
 // recursive selection sort
@@ -195,12 +200,12 @@ void recursiveSelectionSort(int arr[], int l, int r, sortperf_t *s) {
 // Um algoritmo simples de ordenação que divide o array em duas partes: uma parte
 // ordenada (à esquerda) e uma parte não ordenada (à direita). A cada iteração,
 // ele seleciona o menor elemento da parte não ordenada e o move para o final da
-// parte ordenada. 
+// parte ordenada.
 //
-// COMPLEXIDADE: 
+// COMPLEXIDADE:
 // O(n²) no pior caso, O(n²) no melhor caso e O(n²) no caso médio
 //
-// EXEMPLO: 
+// EXEMPLO:
 // [5, 2, 4, 1, 3]
 // Passo 1: [5, 2, 4, 1, 3] → min=1 → Troca 5↔1 → [1, 2, 4, 5, 3]
 // Passo 2: [1 | 2, 4, 5, 3] → min=2 → Nenhuma troca
@@ -209,7 +214,7 @@ void recursiveSelectionSort(int arr[], int l, int r, sortperf_t *s) {
 //
 // PARÂMETROS:
 // arr = vetor a ser ordenado
-// l (left) = limite inferior do vetor, inicializa em 0 
+// l (left) = limite inferior do vetor, inicializa em 0
 // r (right) = limite superior do vetor, inicializa em size - 1 (ultimo elemento)
 // s = ponteiro para a estrutura de desempenho do algoritmo
 void selectionSort(int arr[], int l, int r, sortperf_t *s) {
@@ -222,7 +227,7 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
     // procura o menor valor no subarray não ordenado
     for (int j = i + 1; j <= r; j++) {
       inccmp(s, 1);
-      if (arr[j] < arr[min]) 
+      if (arr[j] < arr[min])
         min = j; // atualiza o índice do menor elemento
     }
 
@@ -236,7 +241,8 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
 // Um algoritmo simples de ordenação que constrói uma sequência ordenada
 // (à esquerda) e uma sequência não ordenada (à direita). A cada iteração, ele
 // pega o primeiro elemento da parte não ordenada e o insere na posição correta
-// da parte ordenada.
+// da parte ordenada. Como jogador de cartas, ele pega uma carta e a coloca na posição
+// correta entre as cartas já ordenadas. O algoritmo é eficiente para listas pequenas.
 //
 // COMPLEXIDADE:
 // O(n²) no pior caso, O(n) no melhor caso e O(n²) no caso médio
@@ -256,7 +262,7 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
 void insertionSort(int v[], int l, int r, sortperf_t *s) {
   inccalls(s, 1); // incrementa o número de chamadas de função
 
-  for (int i = l + 1; i <= r; i++) { //TODO: PORQUE AS COMPARAÇÕES DOS LOOPS FOR NÃO SAO CONTABILIZADAS?
+  for (int i = l + 1; i <= r; i++) { // TODO: PORQUE AS COMPARAÇÕES DOS LOOPS FOR NÃO SAO CONTABILIZADAS?
     int aux = v[i]; // armazena o valor atual //TODO: PARA CADA ATRIBUIÇÃO TEM UMA MOVIMENTAÇÃO???
     incmove(s, 1); // incrementa o número de movimentações
 
@@ -264,7 +270,7 @@ void insertionSort(int v[], int l, int r, sortperf_t *s) {
 
     // desloca os elementos maiores que 'aux' para frente
     // j >= l faz com que o loop não ultrapasse o limite inferior do vetor
-    while (j >= l && v[j] > aux) { //TODO: AQUI ERA PRA TER DUAS COMPARAÇÕES????
+    while (j >= l && v[j] > aux) { // TODO: AQUI ERA PRA TER DUAS COMPARAÇÕES????
       inccmp(s, 1); // so conta comparações de elementos (discarta as comparações de controle)
       v[j + 1] = v[j]; // desloca o elemento para frente
       incmove(s, 1); // incrementa o número de movimentações
@@ -289,7 +295,7 @@ int median(int a, int b, int c) {
     return c; // b c a
   if ((c <= a) && (a <= b))
     return a; // c a b
-  return b;   // c b a
+  return b; // c b a
 }
 
 // quicksort partition using median of 3
@@ -342,9 +348,9 @@ void parse_args(int argc, char **argv, opt_t *opt)
   int c;
 
   // inicializacao variaveis globais para opcoes com valores padrão
-  opt->seed = 1;  // seed para PRNG
+  opt->seed = 1; // seed para PRNG
   opt->size = 10; // tamanho de vetor
-  opt->alg = 1;   // algoritmo a ser utilizado
+  opt->alg = 1; // algoritmo a ser utilizado
 
   // getopt - letra indica a opcao, : junto a letra indica parametro
   // no caso de escolher mais de uma operacao, vale a ultima
@@ -413,16 +419,15 @@ int main(int argc, char **argv) {
   vet = (int *)malloc((opt.size + 1) * sizeof(int));
 
   // initialize
-  resetcounter(&s);  // zera todos os contadores do sortperf (guarda os dados de
-                     // desempenho do algoritmo)
+  resetcounter(&s); // zera todos os contadores do sortperf (guarda os dados de
+                    // desempenho do algoritmo)
   srand48(opt.seed); // inicializa o PRNG com a seed passada na linha de comando
   initVector(vet, opt.size); // inicializa o vetor com valores randomicos
-  vet[opt.size] = vet[0];    // for heapsort
+  vet[opt.size] = vet[0]; // for heapsort
   // if (opt.size < 100) printVector(vet, opt.size);
 
-  retp = clock_gettime(
-      CLOCK_MONOTONIC,
-      &inittp); // recebe tempo atual (tempo inicial) e atribui a inittp
+  retp = clock_gettime(CLOCK_MONOTONIC,
+                       &inittp); // recebe tempo atual (tempo inicial) e atribui a inittp
 
   // execute algorithm
   switch (opt.alg) {
@@ -451,16 +456,15 @@ int main(int argc, char **argv) {
     recursiveSelectionSort(vet, 0, opt.size - 1, &s);
     break;
   }
-  retp = clock_gettime(
-      CLOCK_MONOTONIC,
-      &endtp); // recebe tempo atual (tempo final) e atribui a inittp
+  retp = clock_gettime(CLOCK_MONOTONIC,
+                       &endtp); // recebe tempo atual (tempo final) e atribui a inittp
   clkDiff(inittp, endtp, &restp);
 
   // if (opt.size<100) printVector(vet, opt.size);
 
   // print stats
-  sprintf(pref, "alg %s seed %d size %d time %ld.%.9ld", num2name(opt.alg),
-          opt.seed, opt.size, restp.tv_sec, restp.tv_nsec);
+  sprintf(pref, "alg %s seed %d size %d time %ld.%.9ld", num2name(opt.alg), opt.seed, opt.size, restp.tv_sec,
+          restp.tv_nsec);
 
   printsortperf(&s, buf, pref);
   printf("%s\n", buf);
