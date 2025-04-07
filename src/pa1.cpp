@@ -237,7 +237,6 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
 
   for (int i = l; i <= r; i++) {
     int min = i; // inicializa o índice do menor elemento
-    inccmp(s, 1);
 
     // procura o menor valor no subarray não ordenado
     for (int j = i + 1; j <= r; j++) {
