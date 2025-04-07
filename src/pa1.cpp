@@ -170,6 +170,19 @@ void shellSort(int *A, int n, sortperf_t *s) {
 
   // define um range de comparação, inicialmente n/2 reduzindo a metade por iteração
   for (int range = n / 2; range >= 1; range /= 2) {
+    for (int i = range; i < n; i++) {
+      int j = i;
+      int temp = A[i];
+      incmove(s, 1); // incrementa o número de movimentações
+
+      for (; j >= range && A[j - range] > temp; j -= range) {
+        inccmp(s, 1); // incrementa o número de comparações
+        A[j] = A[j - range]; // desloca o elemento para frente
+        incmove(s, 1); // incrementa o número de movimentações
+      }
+      A[j] = temp;
+      incmove(s, 1); // incrementa o número de movimentações
+    }
   }
 }
 
@@ -262,15 +275,15 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
 void insertionSort(int v[], int l, int r, sortperf_t *s) {
   inccalls(s, 1); // incrementa o número de chamadas de função
 
-  for (int i = l + 1; i <= r; i++) { // TODO: PORQUE AS COMPARAÇÕES DOS LOOPS FOR NÃO SAO CONTABILIZADAS?
-    int aux = v[i]; // armazena o valor atual //TODO: PARA CADA ATRIBUIÇÃO TEM UMA MOVIMENTAÇÃO???
+  for (int i = l + 1; i <= r; i++) {
+    int aux = v[i]; // armazena o valor atual
     incmove(s, 1); // incrementa o número de movimentações
 
     int j = i - 1; // inicializa o índice do elemento anterior
 
     // desloca os elementos maiores que 'aux' para frente
     // j >= l faz com que o loop não ultrapasse o limite inferior do vetor
-    while (j >= l && v[j] > aux) { // TODO: AQUI ERA PRA TER DUAS COMPARAÇÕES????
+    while (j >= l && v[j] > aux) {
       inccmp(s, 1); // so conta comparações de elementos (discarta as comparações de controle)
       v[j + 1] = v[j]; // desloca o elemento para frente
       incmove(s, 1); // incrementa o número de movimentações
