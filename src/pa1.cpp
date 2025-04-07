@@ -168,11 +168,13 @@ void swap(int *xp, int *yp, sortperf_t *s) {
 void shellSort(int *A, int n, sortperf_t *s) {
   inccalls(s, 1); // incrementa o número de chamadas de função
 
-  // define um range de comparação, inicialmente n/2 reduzindo a metade por iteração
+  // define um range de comparação, inicialmente n/2 reduzindo a metade por iteração; ate chegar a 1 (insertion sort
+  // padrão)
   for (int range = n / 2; range >= 1; range /= 2) {
-    for (int i = range; i < n; i++) {
+    for (int i = range; i < n; i++) { // percorre o vetor
       int j = i;
-      int temp = A[i];
+      int temp = A[i]; // conta-se movimentação porque a convenção diz que mover dados de memoria para uma variável
+                       // temporaria é movimentação de dados
       incmove(s, 1); // incrementa o número de movimentações
 
       for (; j >= range && A[j - range] > temp; j -= range) {
