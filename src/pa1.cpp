@@ -182,6 +182,7 @@ void shellSort(int *A, int n, sortperf_t *s) {
         A[j] = A[j - range]; // desloca o elemento para frente
         incmove(s, 1); // incrementa o número de movimentações
       }
+      inccmp(s, 1); // incrementa o número de comparações
       A[j] = temp;
       incmove(s, 1); // incrementa o número de movimentações
     }
@@ -249,6 +250,7 @@ void selectionSort(int arr[], int l, int r, sortperf_t *s) {
     if (min != i)
       swap(&arr[min], &arr[i], s);
   }
+  return;
 }
 
 // INSERTION SORT
@@ -290,10 +292,12 @@ void insertionSort(int v[], int l, int r, sortperf_t *s) {
       incmove(s, 1); // incrementa o número de movimentações
       j--; // decrementa o índice
     }
+    inccmp(s, 1); // incrementa o número de comparações
 
-    // insere o elemento na posição correta
-    v[j + 1] = aux;
-    incmove(s, 1); // incrementa o número de movimentações
+    if (i != j) { // verifica se o índice i é diferente de j
+      v[j + 1] = aux; // insere o elemento na posição correta
+      incmove(s, 1); // incrementa o número de movimentações
+    }
   }
 }
 
