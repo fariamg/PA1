@@ -391,7 +391,22 @@ void quickSort(int *A, int l, int r, sortperf_t *s) {
 }
 
 // quicksort with median of 3
-void quickSort3(int *A, int l, int r, sortperf_t *s) {} // TODO
+void quickSort3(int *A, int l, int r, sortperf_t *s) {
+  inccalls(s, 1);
+  if (l >= r)
+    return;
+
+  int i = 0, j = 0;
+
+  partition3(A, l, r, &i, &j, s);
+
+  // partições recursivas
+  if (l < j)
+    quickSort3(A, l, j, s);
+
+  if (i < r)
+    quickSort3(A, i, r, s);
+}
 
 // quicksort with insertion for small partitions
 void quickSortIns(int *A, int l, int r, sortperf_t *s) {} // TODO
