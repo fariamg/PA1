@@ -313,7 +313,34 @@ int median(int a, int b, int c) {
 }
 
 // quicksort partition using median of 3
-void partition3(int *A, int l, int r, int *i, int *j, sortperf_t *s) {} // TODO
+void partition3(int *A, int l, int r, int *i, int *j, sortperf_t *s) {
+  inccalls(s, 1);
+
+  *i = l; // inicializa o índice i com o limite inferior do vetor
+  *j = r; // inicializa o índice j com o limite superior do vetor
+
+  int pivot = median(A[l], A[r], A[(*i + *j) / 2]); // inicializa o pivô com a mediana dos três elementos
+  do {
+    while (A[*i] < pivot) { // enquanto o elemento em i for menor que o pivô
+      inccmp(s, 1);
+      (*i)++;
+    }
+    inccmp(s, 1);
+
+    while (A[*j] > pivot) { // enquanto o elemento em j for maior que o pivô
+      inccmp(s, 1);
+      (*j)--;
+    }
+    inccmp(s, 1);
+
+    if (*i <= *j) { // se os índices não se cruzaram, troca os elementos
+      swap(&A[*i], &A[*j], s);
+      (*i)++;
+      (*j)--;
+    }
+
+  } while (*i <= *j);
+}
 
 // standard quicksort partition
 void partition(int *A, int l, int r, int *i, int *j, sortperf_t *s) {
