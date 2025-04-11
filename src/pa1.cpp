@@ -374,7 +374,21 @@ void partition(int *A, int l, int r, int *i, int *j, sortperf_t *s) {
 }
 
 // standard quicksort
-void quickSort(int *A, int l, int r, sortperf_t *s) {} // TODO
+void quickSort(int *A, int l, int r, sortperf_t *s) {
+  inccalls(s, 1);
+  if (l >= r) // caso base
+    return;
+
+  int i = 0, j = 0;
+
+  partition(A, l, r, &i, &j, s);
+
+  if (l < j) // verifica se o índice l é menor que j
+    quickSort(A, l, j, s);
+
+  if (i < r) // verifica se o índice i é menor que r
+    quickSort(A, i, r, s);
+}
 
 // quicksort with median of 3
 void quickSort3(int *A, int l, int r, sortperf_t *s) {} // TODO
