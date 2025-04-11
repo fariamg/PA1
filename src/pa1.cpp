@@ -439,7 +439,34 @@ void quickSortIns(int *A, int l, int r, sortperf_t *s) {
 }
 
 // quicksort with insertion for small partitions and median of 3
-void quickSort3Ins(int *A, int l, int r, sortperf_t *s) {} // TODO
+void quickSort3Ins(int *A, int l, int r, sortperf_t *s) {
+  inccalls(s, 1);
+  if (l >= r)
+    return;
+
+  int i = 0, j = 0;
+
+  // primeira partição
+  partition3(A, l, r, &i, &j, s);
+
+  // partições recursivas, com verificação para o insertion sort
+  // se o tamanho da partição for menor ou igual a 50, utiliza o insertion sort
+  if (l < j) {
+    if ((j - l) <= 50) {
+      insertionSort(A, l, j, s);
+    } else {
+      quickSort3Ins(A, l, j, s);
+    }
+  }
+
+  if (i < r) {
+    if ((r - i) <= 50) {
+      insertionSort(A, i, r, s);
+    } else {
+      quickSort3Ins(A, i, r, s);
+    }
+  }
+}
 
 void uso()
 // Descricao: imprime as opcoes de uso
